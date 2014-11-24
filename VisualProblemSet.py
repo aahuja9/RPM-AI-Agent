@@ -49,8 +49,10 @@ class VisualProblemSet:
     #
     # @param problem the File containing the new problem.
     def addProblem(self, set, problem):
-        fullpath = "Problems (Image Data)" + os.sep + set + os.sep + problem + os.sep
-        problemInfo = open(fullpath + problem + ".txt")
+        fullpath = "Problems Data" + os.sep + set + os.sep + problem + os.sep
+        path = os.path.join(fullpath + problem + ".txt")
+        #print path
+        problemInfo = open(path)
         name = self.getNextLine(problemInfo)
         type = self.getNextLine(problemInfo)
         currentAnswer = self.getNextLine(problemInfo)

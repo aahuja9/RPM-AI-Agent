@@ -11,6 +11,7 @@
 
 from PIL import Image
 import os
+import string
 
 class Agent:
     # The default constructor for your Agent. Make sure to execute any
@@ -18,7 +19,12 @@ class Agent:
     #
     # Do not add any variables to this signature; they will not be used by
     # main().
+    objAlphabet = list(string.printable[:-6])
+    currentChar = 0
+
     def __init__(self):
+        objAlphabet = list(string.printable[:-6])
+        currentChar = 0
         pass
 
     # The primary method for solving incoming Raven's Progressive Matrices.
@@ -47,28 +53,34 @@ class Agent:
 
     def Solve(self, problem):
 
-        #if problem.getName() == "2x1 Basic Problem 01":
-        figures = problem.getFigures()
-        prevPath = ""
-        for figure in figures:
-            path = figures[figure].getPath()
+        if problem.getName() == "2x1 Basic Problem 09":
+            figures = problem.getFigures()
+            prevPath = ""
+            for figure in figures:
+                path = figures[figure].getPath()
 
-            savePath = path[:-5] + "Processed Images/"
+                savePath = path[:-5] + "Processed Images/"
+                croppedPath = savePath + "Cropped Objects/"
 
-            #Create the Processed Images folder if it doesn't exist
-            if not os.path.exists(savePath):
-                os.makedirs(savePath)
+                #Create the Processed Images folder if it doesn't exist
+                if not os.path.exists(savePath):
+                    os.makedirs(savePath)
+                    os.makedirs(croppedPath)
 
-            # Check to see if we're still on the same problem; if not, clear the previous runs images
-            if prevPath == "":
-                prevPath = savePath
-            if prevPath != savePath:
-                self.removeProcessedFiles(savePath)
-            else:
-                prevPath = savePath
+                if not os.path.exists(croppedPath):
+                    os.makedirs(croppedPath)
 
-            self.decolorize(path, savePath, figure)
-            self.colorize(savePath + figure + ".png")
+                # Check to see if we're still on the same problem; if not, clear the previous runs images
+                if prevPath == "":
+                    prevPath = savePath
+                if prevPath != savePath:
+                    self.removeProcessedFiles(savePath)
+                    self.removeProcessedFiles(croppedPath)
+                else:
+                    prevPath = savePath
+
+                self.decolorize(path, savePath, figure)
+                self.colorize(savePath + figure + ".png")
 
         return "6"
 
@@ -173,12 +185,89 @@ class Agent:
                             continue
                         # Add the neighboring black pixel to be processed
                         neighbors.append((x,y))
-        image.save(imagePath[:-4] + '-Colored.png')
+        coloredPath = imagePath[:-4] + '-Colored.png'
+        image.save(coloredPath)
+
+        self.cropObjects(coloredPath, colorindex)
 
         return
 
-    def cropObject(self):
+    def cropObjects(self, imagePath, numColors):
+        #TODO: Objects are currently getting completely whited out
+        #SOLUTION: Rather than repeat whiteout process for each color on each figure we should:
+        #  whiteout one color, save image, revert to unaltered image, whiteout next color, save image, and so on
 
-        #TODO: crop out differently colored objects into separate images
+        image = Image.open(imagePath)
+
+        DISTINCT_COLORS = [(0x00, 0xFF, 0x00), (0x00, 0x00, 0xFF), (0xFF, 0x00, 0x00), (0x01, 0xFF, 0xFE), (0xFF, 0xA6, 0xFE), (0xFF, 0xDB, 0x66), (0x00, 0x64, 0x01), (0x01, 0x00, 0x67), (0x95, 0x00, 0x3A), (0x00, 0x7D, 0xB5), (0xFF, 0x00, 0xF6), (0xFF, 0xEE, 0xE8), (0x77, 0x4D, 0x00), (0x90, 0xFB, 0x92), (0x00, 0x76, 0xFF), (0xD5, 0xFF, 0x00), (0xFF, 0x93, 0x7E), (0x6A, 0x82, 0x6C), (0xFF, 0x02, 0x9D), (0xFE, 0x89, 0x00), (0x7A, 0x47, 0x82), (0x7E, 0x2D, 0xD2), (0x85, 0xA9, 0x00), (0xFF, 0x00, 0x56), (0xA4, 0x24, 0x00), (0x00, 0xAE, 0x7E), (0x68, 0x3D, 0x3B), (0xBD, 0xC6, 0xFF), (0x26, 0x34, 0x00), (0xBD, 0xD3, 0x93), (0x00, 0xB9, 0x17), (0x9E, 0x00, 0x8E), (0x00, 0x15, 0x44), (0xC2, 0x8C, 0x9F), (0xFF, 0x74, 0xA3), (0x01, 0xD0, 0xFF), (0x00, 0x47, 0x54), (0xE5, 0x6F, 0xFE), (0x78, 0x82, 0x31), (0x0E, 0x4C, 0xA1), (0x91, 0xD0, 0xCB), (0xBE, 0x99, 0x70), (0x96, 0x8A, 0xE8), (0xBB, 0x88, 0x00), (0x43, 0x00, 0x2C), (0xDE, 0xFF, 0x74), (0x00, 0xFF, 0xC6), (0xFF, 0xE5, 0x02), (0x62, 0x0E, 0x00), (0x00, 0x8F, 0x9C), (0x98, 0xFF, 0x52), (0x75, 0x44, 0xB1), (0xB5, 0x00, 0xFF), (0x00, 0xFF, 0x78), (0xFF, 0x6E, 0x41), (0x00, 0x5F, 0x39), (0x6B, 0x68, 0x82), (0x5F, 0xAD, 0x4E), (0xA7, 0x57, 0x40), (0xA5, 0xFF, 0xD2), (0xFF, 0xB1, 0x67), (0x00, 0x9B, 0xFF), (0xE8, 0x5E, 0xBE)]
+
+        # Generator: Walk through an image pixel by pixel
+        def walk(image):
+            width, height = image.size
+            # Go through each pixel sequentially
+            for index, pixel in enumerate(image.getdata()):
+                # Calculate the current position
+                x = index % width
+                y = index / width
+                # Yield the current position and value
+                yield (x,y,pixel)
+
+        width, height = image.size
+        image = image.convert('RGB')
+        currentColor = 0
+
+        #Find the first pixel of the current color
+        while True:
+            # Don't search for further pixels if we have exhausted the available colors
+            if currentColor > numColors:
+                break
+            color = DISTINCT_COLORS[currentColor]
+            currentColor += 1
+
+            #Find the first colored pixel that's not the color we're cropping
+            coloredPixel = None
+            for x, y, pixel in walk(image):
+                if pixel != (255, 255, 255) and pixel != color:
+                    print x,y, pixel
+                    coloredPixel = (x,y)
+                    break
+            if not coloredPixel:
+                #Keep going until we find the colored pixel
+                break
+
+            # Track neighboring non-current colored pixels
+            neighbors = [coloredPixel]
+
+            # Keep finding neighboring non-current colored pixels until we can't find any more
+            while len(neighbors) > 0:
+                # Make list of the current pixels considered
+                processing = list(neighbors)
+                #Neighbors have been added to the processing list; clear the neighbors list
+                neighbors = []
+                for x,y in processing:
+                    #White out this neighbor
+                    image.putpixel((x,y), (255,255,255))
+                    #Find all the neighbor pixels
+                    new = [(x-1, y), (x+1, y), (x, y-1), (x, y+1)]
+                    for x,y, in new:
+                        if (x,y) in neighbors:
+                            #Added, skip
+                            continue
+                        if x < 0 or x >= width:
+                            #Not valid
+                            continue
+                        if y < 0 or y >= height:
+                            #Not valid
+                            continue
+                        if image.getpixel((x,y)) == (255,255,255) or image.getpixel((x,y)) == color:
+                            #This pixel is targeted for cropping, skip it and do NOT whiteout
+                            continue
+
+                        #If passed all conditions, add pixcel to the neighbors of those that need to be whited out
+                        neighbors.append((x,y))
+        figure = imagePath[-13:-12]
+        croppedPath = os.path.join(imagePath[:-13] + "Cropped Objects/")
+        self.currentChar += 1
+        image.save(croppedPath + figure + "-" + self.objAlphabet[self.currentChar] + "-Cropped.png")
 
         return

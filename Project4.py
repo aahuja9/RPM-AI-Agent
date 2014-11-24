@@ -23,10 +23,10 @@ def main():
             # Additional sets of problems will be used when grading projects.
             # You may also write your own problems.
 
-    for file in os.listdir("Problems (Image Data)"): # One problem set per folder in /Problems/
+    for file in os.listdir("Problems Data"): # One problem set per folder in /Problems/
         newSet = VisualProblemSet(file)       # Each problem set is named after the folder in /Problems/
         sets.append(newSet)
-        for problem in os.listdir("Problems (Image Data)" + os.sep + file):  # Each file in the problem set folder becomes a problem in that set.
+        for problem in os.listdir("Problems Data" + os.sep + file):  # Each file in the problem set folder becomes a problem in that set.
             newSet.addProblem(file, problem)
 
     # Initializing problem-solving agent from Agent.java
