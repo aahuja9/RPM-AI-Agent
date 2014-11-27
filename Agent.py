@@ -55,34 +55,40 @@ class Agent:
 
         if problem.getName() == "2x1 Basic Problem 09":
             figures = problem.getFigures()
-            prevPath = ""
+
             for figure in figures:
+
                 path = figures[figure].getPath()
-
-                savePath = path[:-5] + "Processed Images/"
-                croppedPath = savePath + "Cropped Objects/"
-
-                #Create the Processed Images folder if it doesn't exist
-                if not os.path.exists(savePath):
-                    os.makedirs(savePath)
-                    os.makedirs(croppedPath)
-
-                if not os.path.exists(croppedPath):
-                    os.makedirs(croppedPath)
-
-                # Check to see if we're still on the same problem; if not, clear the previous runs images
-                if prevPath == "":
-                    prevPath = savePath
-                if prevPath != savePath:
-                    self.removeProcessedFiles(savePath)
-                    self.removeProcessedFiles(croppedPath)
-                else:
-                    prevPath = savePath
+                savePath = self.cleanPaths(path)
 
                 self.decolorize(path, savePath, figure)
                 self.colorize(savePath + figure + ".png")
 
         return "6"
+
+    def cleanPaths(self, path):
+        prevPath = ""
+        savePath = path[:-5] + "Processed Images/"
+        croppedPath = savePath + "Cropped Objects/"
+
+        # Create the Processed Images folder if it doesn't exist
+        if not os.path.exists(savePath):
+            os.makedirs(savePath)
+            os.makedirs(croppedPath)
+
+        if not os.path.exists(croppedPath):
+            os.makedirs(croppedPath)
+
+        # Check to see if we're still on the same problem; if not, clear the previous runs images
+        if prevPath == "":
+            prevPath = savePath
+        if prevPath != savePath:
+            self.removeProcessedFiles(savePath)
+            self.removeProcessedFiles(croppedPath)
+        else:
+            prevPath = savePath
+
+        return savePath
 
     def decolorize(self, path, savePath, figure):
 
@@ -188,13 +194,13 @@ class Agent:
         coloredPath = imagePath[:-4] + '-Colored.png'
         image.save(coloredPath)
 
-        self.cropObjects(coloredPath, colorindex)
+        self.isolateObjects(coloredPath, colorindex)
 
         return
 
-    def cropObjects(self, imagePath, numColors):
-        #TODO: Objects are currently getting completely whited out
-        #SOLUTION: Rather than repeat whiteout process for each color on each figure we should:
+    def isolateObjects(self, imagePath, numColors):
+
+        # SOLUTION: Rather than repeat whiteout process for each color on each figure we should:
         #  whiteout one color, save image, revert to unaltered image, whiteout next color, save image, and so on
 
         image = Image.open(imagePath)
@@ -216,23 +222,23 @@ class Agent:
         image = image.convert('RGB')
         currentColor = 0
 
-        #Find the first pixel of the current color
+        # Find the first pixel of the current color
         while True:
             # Don't search for further pixels if we have exhausted the available colors
-            if currentColor > numColors:
-                break
+
             color = DISTINCT_COLORS[currentColor]
             currentColor += 1
-
-            #Find the first colored pixel that's not the color we're cropping
+            if currentColor >= numColors:
+                break
+            # Find the first colored pixel that's not the color we're cropping
             coloredPixel = None
             for x, y, pixel in walk(image):
                 if pixel != (255, 255, 255) and pixel != color:
-                    print x,y, pixel
-                    coloredPixel = (x,y)
+                    # print x, y, pixel
+                    coloredPixel = (x, y)
                     break
             if not coloredPixel:
-                #Keep going until we find the colored pixel
+                # Keep going until we find the colored pixel
                 break
 
             # Track neighboring non-current colored pixels
@@ -242,32 +248,74 @@ class Agent:
             while len(neighbors) > 0:
                 # Make list of the current pixels considered
                 processing = list(neighbors)
-                #Neighbors have been added to the processing list; clear the neighbors list
+                # Neighbors have been added to the processing list; clear the neighbors list
                 neighbors = []
                 for x,y in processing:
-                    #White out this neighbor
-                    image.putpixel((x,y), (255,255,255))
-                    #Find all the neighbor pixels
+                    # White out this neighbor
+                    image.putpixel((x, y), (255, 255, 255))
+                    # Find all the neighbor pixels
                     new = [(x-1, y), (x+1, y), (x, y-1), (x, y+1)]
                     for x,y, in new:
                         if (x,y) in neighbors:
-                            #Added, skip
+                            # Added, skip
                             continue
                         if x < 0 or x >= width:
-                            #Not valid
+                            # Not valid
                             continue
                         if y < 0 or y >= height:
-                            #Not valid
+                            # Not valid
                             continue
-                        if image.getpixel((x,y)) == (255,255,255) or image.getpixel((x,y)) == color:
-                            #This pixel is targeted for cropping, skip it and do NOT whiteout
+                        if image.getpixel((x,y)) == (255, 255, 255) or image.getpixel((x, y)) == color:
+                            # This pixel is targeted for cropping, skip it and do NOT whiteout
                             continue
 
-                        #If passed all conditions, add pixcel to the neighbors of those that need to be whited out
+                        # If passed all conditions, add pixel to the neighbors of those that need to be whited out
                         neighbors.append((x,y))
-        figure = imagePath[-13:-12]
-        croppedPath = os.path.join(imagePath[:-13] + "Cropped Objects/")
-        self.currentChar += 1
-        image.save(croppedPath + figure + "-" + self.objAlphabet[self.currentChar] + "-Cropped.png")
 
-        return
+            # Save the image to a new directory
+            figure = imagePath[-13:-12]
+            croppedPath = os.path.join(imagePath[:-13] + "Cropped Objects/")
+            self.currentChar += 1
+            isolatedPath = croppedPath + figure + "-" + self.objAlphabet[self.currentChar] + "-Cropped.png"
+            image.save(isolatedPath)
+
+            # Crop the isolated image to just the object and no extra whitespace
+            self.cropObject(isolatedPath, color)
+
+            # Reopen the original image and isolate the next object
+            image = Image.open(imagePath)
+
+    def cropObject(self, path, color):
+        image = Image.open(path)
+        width, height = image.size
+        leftmost = width
+        uppermost = height
+        rightmost = 0
+        bottomost = 0
+
+        def walk(image):
+            width, height = image.size
+            # Go through each pixel sequentially
+            for index, pixel in enumerate(image.getdata()):
+                # Calculate the current position
+                x = index % width
+                y = index / width
+                # Yield the current position and value
+                yield (x,y,pixel)
+
+        # Walk the image and find the rightmost, leftmost, bottommost and uppermost pixels to use for cropping the object
+        for x, y, pixel in walk(image):
+                if pixel != (255, 255, 255) and pixel == color:
+                    if x > rightmost:
+                        rightmost = x
+                    if x < leftmost:
+                        leftmost = x
+                    if y > bottomost:
+                        bottomost = y
+                    if y < uppermost:
+                        uppermost = y
+
+        cropCoords = (leftmost, uppermost, rightmost, bottomost)
+        image = image.crop(cropCoords)
+        image.save(path)
+
