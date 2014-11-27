@@ -57,12 +57,15 @@ class Agent:
             figures = problem.getFigures()
 
             for figure in figures:
-
                 path = figures[figure].getPath()
                 savePath = self.cleanPaths(path)
-
                 self.decolorize(path, savePath, figure)
                 self.colorize(savePath + figure + ".png")
+
+            objPath = savePath + 'Cropped Objects/'
+
+            for file in os.listdir(objPath):
+                self.findShape(objPath + file)
 
         return "6"
 
@@ -318,4 +321,55 @@ class Agent:
         cropCoords = (leftmost, uppermost, rightmost, bottomost)
         image = image.crop(cropCoords)
         image.save(path)
+
+    def findShape(self, path):
+        image = Image.open(path)
+        width, height = image.size
+        total = width * height
+        outerWhite = 0.0
+        inside = False
+        prevPixel = None
+
+        def walk(image):
+            width, height = image.size
+            # Go through each pixel sequentially
+            for index, pixel in enumerate(image.getdata()):
+                # Calculate the current position
+                x = index % width
+                y = index / width
+                # Yield the current position and value
+                yield (x,y,pixel)
+
+        # Walk the image and find the rightmost, leftmost, bottommost and uppermost pixels to use for cropping the object
+        prevLine = -1
+        count = True
+        outerWhite = 0.
+        pixelIndices = {}
+        firstFound = None
+
+        for x, y, pixel in walk(image):
+            if y > prevLine:
+                firstFound = False
+
+            if pixel != (255, 255, 255) and firstFound is False:
+                firstFound = True
+                pixelIndices[y + 'First'] = (x, y)
+            if pixel != (255, 255, 255):
+                pixelIndices[y + 'Last'] = (x, y)
+
+            prevLine = y
+
+
+
+        print outerWhite, total
+        ratio = outerWhite / total
+        print path, ":     ", ratio
+
+
+    #
+    # def findFill(self):
+    #
+    # def findRotation(self):
+    #
+    # def findPosition(self):
 

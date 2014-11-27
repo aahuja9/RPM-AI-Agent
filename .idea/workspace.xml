@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a3cad8a-8f5c-4272-ae67-ba686ee96203" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Problems Data/2x1 Basic Problems/2x1BasicProblem09/Processed Images/Cropped Objects/1-4-Cropped.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Problems Data/2x1 Basic Problems/2x1BasicProblem09/Processed Images/Cropped Objects/2-6-Cropped.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Problems Data/2x1 Basic Problems/2x1BasicProblem09/Processed Images/Cropped Objects/3-5-Cropped.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Problems Data/2x1 Basic Problems/2x1BasicProblem09/Processed Images/Cropped Objects/4-8-Cropped.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Problems Data/2x1 Basic Problems/2x1BasicProblem09/Processed Images/Cropped Objects/5-7-Cropped.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Problems Data/2x1 Basic Problems/2x1BasicProblem09/Processed Images/Cropped Objects/6-9-Cropped.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Problems Data/2x1 Basic Problems/2x1BasicProblem09/Processed Images/Cropped Objects/B-3-Cropped.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Problems Data/2x1 Basic Problems/2x1BasicProblem09/Processed Images/Cropped Objects/C-2-Cropped.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Problems Data/2x1 Basic Problems/2x1BasicProblem09/Processed Images/Cropped Objects/A-1-Cropped.png" afterPath="$PROJECT_DIR$/Problems Data/2x1 Basic Problems/2x1BasicProblem09/Processed Images/Cropped Objects/A-1-Cropped.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Agent.py" afterPath="$PROJECT_DIR$/Agent.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/RPM-AI-Agent.iml" afterPath="$PROJECT_DIR$/.idea/RPM-AI-Agent.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="RPM-AI-Agent.iws" />
@@ -40,16 +30,15 @@
       <file leaf-file-name="Agent.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Agent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.75454545" vertical-offset="668" max-vertical-offset="1548">
-              <caret line="198" column="14" selection-start-line="198" selection-start-column="14" selection-end-line="198" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.77272725" vertical-offset="1750" max-vertical-offset="2916">
+              <caret line="354" column="33" selection-start-line="354" selection-start-column="33" selection-end-line="354" selection-end-column="33" />
               <folding>
                 <element signature="e#347#368#0" expanded="true" />
-                <element signature="e#2675#3412#0" expanded="false" />
-                <element signature="e#3473#4101#0" expanded="false" />
-                <element signature="e#4153#4398#0" expanded="false" />
-                <element signature="e#4444#8572#0" expanded="false" />
-                <element signature="e#8635#13575#0" expanded="false" />
-                <element signature="e#13624#14818#0" expanded="false" />
+                <element signature="e#3617#4245#0" expanded="false" />
+                <element signature="e#4297#4542#0" expanded="false" />
+                <element signature="e#4588#8716#0" expanded="false" />
+                <element signature="e#8779#13719#0" expanded="false" />
+                <element signature="e#13768#14962#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -372,12 +361,11 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#347#368#0" expanded="true" />
-            <element signature="e#2675#3412#0" expanded="false" />
-            <element signature="e#3473#4101#0" expanded="false" />
-            <element signature="e#4153#4398#0" expanded="false" />
-            <element signature="e#4444#8572#0" expanded="false" />
-            <element signature="e#8635#13575#0" expanded="false" />
-            <element signature="e#13624#14818#0" expanded="false" />
+            <element signature="e#3617#4245#0" expanded="false" />
+            <element signature="e#4297#4542#0" expanded="false" />
+            <element signature="e#4588#8716#0" expanded="false" />
+            <element signature="e#8779#13719#0" expanded="false" />
+            <element signature="e#13768#14962#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -412,12 +400,11 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#347#368#0" expanded="true" />
-            <element signature="e#2675#3412#0" expanded="false" />
-            <element signature="e#3473#4101#0" expanded="false" />
-            <element signature="e#4153#4398#0" expanded="false" />
-            <element signature="e#4444#8572#0" expanded="false" />
-            <element signature="e#8635#13575#0" expanded="false" />
-            <element signature="e#13624#14818#0" expanded="false" />
+            <element signature="e#3617#4245#0" expanded="false" />
+            <element signature="e#4297#4542#0" expanded="false" />
+            <element signature="e#4588#8716#0" expanded="false" />
+            <element signature="e#8779#13719#0" expanded="false" />
+            <element signature="e#13768#14962#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -436,12 +423,11 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#347#368#0" expanded="true" />
-            <element signature="e#2675#3412#0" expanded="false" />
-            <element signature="e#3473#4101#0" expanded="false" />
-            <element signature="e#4153#4398#0" expanded="false" />
-            <element signature="e#4444#8572#0" expanded="false" />
-            <element signature="e#8635#13575#0" expanded="false" />
-            <element signature="e#13624#14818#0" expanded="false" />
+            <element signature="e#3617#4245#0" expanded="false" />
+            <element signature="e#4297#4542#0" expanded="false" />
+            <element signature="e#4588#8716#0" expanded="false" />
+            <element signature="e#8779#13719#0" expanded="false" />
+            <element signature="e#13768#14962#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -492,16 +478,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Agent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.75454545" vertical-offset="668" max-vertical-offset="1548">
-          <caret line="198" column="14" selection-start-line="198" selection-start-column="14" selection-end-line="198" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.77272725" vertical-offset="1750" max-vertical-offset="2916">
+          <caret line="354" column="33" selection-start-line="354" selection-start-column="33" selection-end-line="354" selection-end-column="33" />
           <folding>
             <element signature="e#347#368#0" expanded="true" />
-            <element signature="e#2675#3412#0" expanded="false" />
-            <element signature="e#3473#4101#0" expanded="false" />
-            <element signature="e#4153#4398#0" expanded="false" />
-            <element signature="e#4444#8572#0" expanded="false" />
-            <element signature="e#8635#13575#0" expanded="false" />
-            <element signature="e#13624#14818#0" expanded="false" />
+            <element signature="e#3617#4245#0" expanded="false" />
+            <element signature="e#4297#4542#0" expanded="false" />
+            <element signature="e#4588#8716#0" expanded="false" />
+            <element signature="e#8779#13719#0" expanded="false" />
+            <element signature="e#13768#14962#0" expanded="false" />
           </folding>
         </state>
       </provider>
