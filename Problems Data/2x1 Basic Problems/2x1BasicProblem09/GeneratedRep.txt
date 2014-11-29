@@ -1,0 +1,48 @@
+2x1 Basic Problem 09
+2x1 (Image)
+1
+A
+    1
+        shape:0.40082815735
+    2
+        shape:0.40082815735
+B
+    5
+        shape:0.451282051282
+    6
+        shape:0.409937888199
+C
+    3
+        shape:0.0
+    4
+        shape:0.0
+1
+    7
+        shape:0.0
+    8
+        shape:0.0
+2
+    b
+        shape:0.0
+    c
+        shape:0.0
+3
+    9
+        shape:0.0
+    a
+        shape:0.0
+4
+    f
+        shape:0.0
+    g
+        shape:0.0
+5
+    d
+        shape:0.478024691358
+    e
+        shape:0.468764146673
+6
+    h
+        shape:0.468537799909
+    i
+        shape:0.472592592593

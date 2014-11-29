@@ -13,6 +13,7 @@ from PIL import Image
 import os
 import string
 from glob import glob
+import shutil
 
 class Agent:
     # The default constructor for your Agent. Make sure to execute any
@@ -22,7 +23,9 @@ class Agent:
     # main().
     objAlphabet = list(string.printable[:-6])
     currentChar = 0
-    figList2x1 = ['A']
+    figList2x1 = ["A", "B", "C", "1", "2", "3", "4", "5", "6"]
+    figList2x2 = ["A", "B", "C", "1", "2", "3", "4", "5", "6"]
+    figList3x3 = ["A", "B", "C", "D", "E", "F", "G", "H", "1", "2", "3", "4", "5", "6"]
 
     def __init__(self):
         objAlphabet = list(string.printable[:-6])
@@ -56,26 +59,51 @@ class Agent:
     def Solve(self, problem):
 
         if problem.getName() == "2x1 Basic Problem 09":
+            # Initialize problem information
+            probType = problem.getProblemType()
+            probName = problem.getName()
             figures = problem.getFigures()
+            rootPath = "" # File path to root folder of problem
+            figList = ""
+            savePath = "" # Path to saved, processed images
 
+            if probType == "2x1 (Image)":
+                figList = self.figList2x1
+            elif probType == "2x2 (Image)":
+                figList = self.figList2x2
+            elif probType == "3x3 (Image)":
+                figList = self.figList3x3
+
+            # Pre-process the images for determination logic
             for figure in figures:
                 path = figures[figure].getPath()
-                print figure
+                rootPath = path[:-5]
+                print rootPath
                 savePath = self.cleanPaths(path)
                 self.decolorize(path, savePath, figure)
                 self.colorize(savePath + figure + ".png")
 
-            # Find values for objects
+            # Find object attributes and write them to file
             objPath = savePath + 'Cropped Objects/'
             objsList = glob(os.path.join(objPath, '*.png'))
 
-            for figure in
-            for object in sorted(objsList):
+            shutil.copyfile(rootPath + probName.replace(" ", "") + ".txt", rootPath + "GeneratedRep.txt")
 
-                self.findShape(object)
-                # Find fill
-                # find Rotation
-                # Find Positionals
+            for figure in figList:
+                with open(rootPath + "GeneratedRep.txt", "a") as repFile:
+                    repFile.write("\n" + figure)
+                    for object in sorted(objsList):
+                        figureID = object[-15:-14]
+                        if figureID == figure:
+                            objectID = object[-13:-12]
+                            repFile.write("\n" + "    " + objectID)
+                            repFile.write("\n" + "        shape:" + str(self.findShape(object)))
+                            # Find fill
+                            # find Rotation
+                            # Find Positionals
+
+            # Pass written file to "old" agent for processing of propositional representation
+            # TODO: old agent logic inserted here
 
         return "6"
 
@@ -380,20 +408,8 @@ class Agent:
 
         # Calculate the ratio between the total number of pixels and the white pixels outside the shape; use this as an estimation of similar objects
         ratio = outerWhite / total
-        print ratio
         return ratio
 
-
-    #
-    # def findFill(self):
-    #
-    # def findRotation(self):
-    #
-    # def findPosition(self):
-
-    def constructPropositions(self):
-
-        return
 
 
 
