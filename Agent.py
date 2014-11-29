@@ -12,6 +12,7 @@
 from PIL import Image
 import os
 import string
+from glob import glob
 
 class Agent:
     # The default constructor for your Agent. Make sure to execute any
@@ -21,6 +22,7 @@ class Agent:
     # main().
     objAlphabet = list(string.printable[:-6])
     currentChar = 0
+    figList2x1 = ['A']
 
     def __init__(self):
         objAlphabet = list(string.printable[:-6])
@@ -58,14 +60,22 @@ class Agent:
 
             for figure in figures:
                 path = figures[figure].getPath()
+                print figure
                 savePath = self.cleanPaths(path)
                 self.decolorize(path, savePath, figure)
                 self.colorize(savePath + figure + ".png")
 
+            # Find values for objects
             objPath = savePath + 'Cropped Objects/'
+            objsList = glob(os.path.join(objPath, '*.png'))
 
-            for file in os.listdir(objPath):
-                self.findShape(objPath + file)
+            for figure in
+            for object in sorted(objsList):
+
+                self.findShape(object)
+                # Find fill
+                # find Rotation
+                # Find Positionals
 
         return "6"
 
@@ -342,28 +352,36 @@ class Agent:
 
         # Walk the image and find the rightmost, leftmost, bottommost and uppermost pixels to use for cropping the object
         prevLine = -1
-        count = True
         outerWhite = 0.
-        pixelIndices = {}
+        firstPixels = {}
+        lastPixels = {}
         firstFound = None
 
+        # Find the first and last non-white pixels in a row of the image and store them
         for x, y, pixel in walk(image):
             if y > prevLine:
                 firstFound = False
 
             if pixel != (255, 255, 255) and firstFound is False:
                 firstFound = True
-                pixelIndices[y + 'First'] = (x, y)
+                firstPixels[y] = (x, y)
             if pixel != (255, 255, 255):
-                pixelIndices[y + 'Last'] = (x, y)
+                lastPixels[y] = (x, y)
 
             prevLine = y
 
+        # Iterate over each line again and count all the pixels prior to the first non-white pixel and after the last non-white pixel
+        for x, y, pixel in walk(image):
+            firstX = firstPixels[y][0]
+            lastX = lastPixels[y][0]
 
+            if x < firstX or x > lastX:
+                outerWhite += 1
 
-        print outerWhite, total
+        # Calculate the ratio between the total number of pixels and the white pixels outside the shape; use this as an estimation of similar objects
         ratio = outerWhite / total
-        print path, ":     ", ratio
+        print ratio
+        return ratio
 
 
     #
@@ -372,4 +390,10 @@ class Agent:
     # def findRotation(self):
     #
     # def findPosition(self):
+
+    def constructPropositions(self):
+
+        return
+
+
 
