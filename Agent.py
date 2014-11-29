@@ -15,6 +15,7 @@ import string
 from glob import glob
 import shutil
 
+
 class Agent:
     # The default constructor for your Agent. Make sure to execute any
     # processing necessary before your Agent starts solving problems here.
@@ -63,9 +64,9 @@ class Agent:
             probType = problem.getProblemType()
             probName = problem.getName()
             figures = problem.getFigures()
-            rootPath = "" # File path to root folder of problem
+            rootPath = ""  # File path to root folder of problem
             figList = ""
-            savePath = "" # Path to saved, processed images
+            savePath = ""  # Path to saved, processed images
 
             if probType == "2x1 (Image)":
                 figList = self.figList2x1
@@ -99,11 +100,14 @@ class Agent:
                             repFile.write("\n" + "    " + objectID)
                             repFile.write("\n" + "        shape:" + str(self.findShape(object)))
                             # Find fill
+                            repFile.write("\n" + "        fill:" + self.findFill(object))
                             # find Rotation
+                            repFile.write("\n" + "        shape:" + str(self.findShape(object)))
                             # Find Positionals
+                            repFile.write("\n" + "        shape:" + str(self.findShape(object)))
 
-            # Pass written file to "old" agent for processing of propositional representation
-            # TODO: old agent logic inserted here
+                            # Pass written file to "old" agent for processing of propositional representation
+                            # TODO: old agent logic inserted here
 
         return "6"
 
@@ -168,7 +172,22 @@ class Agent:
 
         image = Image.open(imagePath)
 
-        DISTINCT_COLORS = [(0x00, 0xFF, 0x00), (0x00, 0x00, 0xFF), (0xFF, 0x00, 0x00), (0x01, 0xFF, 0xFE), (0xFF, 0xA6, 0xFE), (0xFF, 0xDB, 0x66), (0x00, 0x64, 0x01), (0x01, 0x00, 0x67), (0x95, 0x00, 0x3A), (0x00, 0x7D, 0xB5), (0xFF, 0x00, 0xF6), (0xFF, 0xEE, 0xE8), (0x77, 0x4D, 0x00), (0x90, 0xFB, 0x92), (0x00, 0x76, 0xFF), (0xD5, 0xFF, 0x00), (0xFF, 0x93, 0x7E), (0x6A, 0x82, 0x6C), (0xFF, 0x02, 0x9D), (0xFE, 0x89, 0x00), (0x7A, 0x47, 0x82), (0x7E, 0x2D, 0xD2), (0x85, 0xA9, 0x00), (0xFF, 0x00, 0x56), (0xA4, 0x24, 0x00), (0x00, 0xAE, 0x7E), (0x68, 0x3D, 0x3B), (0xBD, 0xC6, 0xFF), (0x26, 0x34, 0x00), (0xBD, 0xD3, 0x93), (0x00, 0xB9, 0x17), (0x9E, 0x00, 0x8E), (0x00, 0x15, 0x44), (0xC2, 0x8C, 0x9F), (0xFF, 0x74, 0xA3), (0x01, 0xD0, 0xFF), (0x00, 0x47, 0x54), (0xE5, 0x6F, 0xFE), (0x78, 0x82, 0x31), (0x0E, 0x4C, 0xA1), (0x91, 0xD0, 0xCB), (0xBE, 0x99, 0x70), (0x96, 0x8A, 0xE8), (0xBB, 0x88, 0x00), (0x43, 0x00, 0x2C), (0xDE, 0xFF, 0x74), (0x00, 0xFF, 0xC6), (0xFF, 0xE5, 0x02), (0x62, 0x0E, 0x00), (0x00, 0x8F, 0x9C), (0x98, 0xFF, 0x52), (0x75, 0x44, 0xB1), (0xB5, 0x00, 0xFF), (0x00, 0xFF, 0x78), (0xFF, 0x6E, 0x41), (0x00, 0x5F, 0x39), (0x6B, 0x68, 0x82), (0x5F, 0xAD, 0x4E), (0xA7, 0x57, 0x40), (0xA5, 0xFF, 0xD2), (0xFF, 0xB1, 0x67), (0x00, 0x9B, 0xFF), (0xE8, 0x5E, 0xBE)]
+        DISTINCT_COLORS = [(0x00, 0xFF, 0x00), (0x00, 0x00, 0xFF), (0xFF, 0x00, 0x00), (0x01, 0xFF, 0xFE),
+                           (0xFF, 0xA6, 0xFE), (0xFF, 0xDB, 0x66), (0x00, 0x64, 0x01), (0x01, 0x00, 0x67),
+                           (0x95, 0x00, 0x3A), (0x00, 0x7D, 0xB5), (0xFF, 0x00, 0xF6), (0xFF, 0xEE, 0xE8),
+                           (0x77, 0x4D, 0x00), (0x90, 0xFB, 0x92), (0x00, 0x76, 0xFF), (0xD5, 0xFF, 0x00),
+                           (0xFF, 0x93, 0x7E), (0x6A, 0x82, 0x6C), (0xFF, 0x02, 0x9D), (0xFE, 0x89, 0x00),
+                           (0x7A, 0x47, 0x82), (0x7E, 0x2D, 0xD2), (0x85, 0xA9, 0x00), (0xFF, 0x00, 0x56),
+                           (0xA4, 0x24, 0x00), (0x00, 0xAE, 0x7E), (0x68, 0x3D, 0x3B), (0xBD, 0xC6, 0xFF),
+                           (0x26, 0x34, 0x00), (0xBD, 0xD3, 0x93), (0x00, 0xB9, 0x17), (0x9E, 0x00, 0x8E),
+                           (0x00, 0x15, 0x44), (0xC2, 0x8C, 0x9F), (0xFF, 0x74, 0xA3), (0x01, 0xD0, 0xFF),
+                           (0x00, 0x47, 0x54), (0xE5, 0x6F, 0xFE), (0x78, 0x82, 0x31), (0x0E, 0x4C, 0xA1),
+                           (0x91, 0xD0, 0xCB), (0xBE, 0x99, 0x70), (0x96, 0x8A, 0xE8), (0xBB, 0x88, 0x00),
+                           (0x43, 0x00, 0x2C), (0xDE, 0xFF, 0x74), (0x00, 0xFF, 0xC6), (0xFF, 0xE5, 0x02),
+                           (0x62, 0x0E, 0x00), (0x00, 0x8F, 0x9C), (0x98, 0xFF, 0x52), (0x75, 0x44, 0xB1),
+                           (0xB5, 0x00, 0xFF), (0x00, 0xFF, 0x78), (0xFF, 0x6E, 0x41), (0x00, 0x5F, 0x39),
+                           (0x6B, 0x68, 0x82), (0x5F, 0xAD, 0x4E), (0xA7, 0x57, 0x40), (0xA5, 0xFF, 0xD2),
+                           (0xFF, 0xB1, 0x67), (0x00, 0x9B, 0xFF), (0xE8, 0x5E, 0xBE)]
 
         # Walk through an image pixel by pixel
         def walk(image):
@@ -179,7 +198,7 @@ class Agent:
                 x = index % width
                 y = index / width
                 # Yield the current position and value
-                yield (x,y,pixel)
+                yield (x, y, pixel)
 
         # Convert the image to RGB (assume it's currently black and white)
         image = image.convert('RGB')
@@ -196,7 +215,7 @@ class Agent:
             for x, y, pixel in walk(image):
                 # Found the first black pixel
                 if pixel == (0, 0, 0):
-                    blackpixel = (x,y)
+                    blackpixel = (x, y)
                     break
             if not blackpixel:
                 # No more black pixels, the image is fully colored
@@ -211,14 +230,14 @@ class Agent:
                 # Clear the neighbors we are going to process from the list
                 neighbors = []
                 # Process each of the neighbors
-                for x,y in processing:
+                for x, y in processing:
                     # Color this neighbor
-                    image.putpixel((x,y), color)
+                    image.putpixel((x, y), color)
                     # Find all of the neighboring pixels
-                    new = [(x-1, y), (x+1, y), (x, y-1), (x, y+1)]
+                    new = [(x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)]
                     # Go through the neighbors
-                    for x,y in new:
-                        if (x,y) in neighbors:
+                    for x, y in new:
+                        if (x, y) in neighbors:
                             # Already added, skip
                             continue
                         if x < 0 or x >= width:
@@ -227,11 +246,11 @@ class Agent:
                         if y < 0 or y >= height:
                             # Invalid y value, skip
                             continue
-                        if image.getpixel((x,y)) != (0, 0, 0):
+                        if image.getpixel((x, y)) != (0, 0, 0):
                             # Non-black pixel, skip
                             continue
                         # Add the neighboring black pixel to be processed
-                        neighbors.append((x,y))
+                        neighbors.append((x, y))
         coloredPath = imagePath[:-4] + '-Colored.png'
         image.save(coloredPath)
 
@@ -242,11 +261,26 @@ class Agent:
     def isolateObjects(self, imagePath, numColors):
 
         # SOLUTION: Rather than repeat whiteout process for each color on each figure we should:
-        #  whiteout one color, save image, revert to unaltered image, whiteout next color, save image, and so on
+        # whiteout one color, save image, revert to unaltered image, whiteout next color, save image, and so on
 
         image = Image.open(imagePath)
 
-        DISTINCT_COLORS = [(0x00, 0xFF, 0x00), (0x00, 0x00, 0xFF), (0xFF, 0x00, 0x00), (0x01, 0xFF, 0xFE), (0xFF, 0xA6, 0xFE), (0xFF, 0xDB, 0x66), (0x00, 0x64, 0x01), (0x01, 0x00, 0x67), (0x95, 0x00, 0x3A), (0x00, 0x7D, 0xB5), (0xFF, 0x00, 0xF6), (0xFF, 0xEE, 0xE8), (0x77, 0x4D, 0x00), (0x90, 0xFB, 0x92), (0x00, 0x76, 0xFF), (0xD5, 0xFF, 0x00), (0xFF, 0x93, 0x7E), (0x6A, 0x82, 0x6C), (0xFF, 0x02, 0x9D), (0xFE, 0x89, 0x00), (0x7A, 0x47, 0x82), (0x7E, 0x2D, 0xD2), (0x85, 0xA9, 0x00), (0xFF, 0x00, 0x56), (0xA4, 0x24, 0x00), (0x00, 0xAE, 0x7E), (0x68, 0x3D, 0x3B), (0xBD, 0xC6, 0xFF), (0x26, 0x34, 0x00), (0xBD, 0xD3, 0x93), (0x00, 0xB9, 0x17), (0x9E, 0x00, 0x8E), (0x00, 0x15, 0x44), (0xC2, 0x8C, 0x9F), (0xFF, 0x74, 0xA3), (0x01, 0xD0, 0xFF), (0x00, 0x47, 0x54), (0xE5, 0x6F, 0xFE), (0x78, 0x82, 0x31), (0x0E, 0x4C, 0xA1), (0x91, 0xD0, 0xCB), (0xBE, 0x99, 0x70), (0x96, 0x8A, 0xE8), (0xBB, 0x88, 0x00), (0x43, 0x00, 0x2C), (0xDE, 0xFF, 0x74), (0x00, 0xFF, 0xC6), (0xFF, 0xE5, 0x02), (0x62, 0x0E, 0x00), (0x00, 0x8F, 0x9C), (0x98, 0xFF, 0x52), (0x75, 0x44, 0xB1), (0xB5, 0x00, 0xFF), (0x00, 0xFF, 0x78), (0xFF, 0x6E, 0x41), (0x00, 0x5F, 0x39), (0x6B, 0x68, 0x82), (0x5F, 0xAD, 0x4E), (0xA7, 0x57, 0x40), (0xA5, 0xFF, 0xD2), (0xFF, 0xB1, 0x67), (0x00, 0x9B, 0xFF), (0xE8, 0x5E, 0xBE)]
+        DISTINCT_COLORS = [(0x00, 0xFF, 0x00), (0x00, 0x00, 0xFF), (0xFF, 0x00, 0x00), (0x01, 0xFF, 0xFE),
+                           (0xFF, 0xA6, 0xFE), (0xFF, 0xDB, 0x66), (0x00, 0x64, 0x01), (0x01, 0x00, 0x67),
+                           (0x95, 0x00, 0x3A), (0x00, 0x7D, 0xB5), (0xFF, 0x00, 0xF6), (0xFF, 0xEE, 0xE8),
+                           (0x77, 0x4D, 0x00), (0x90, 0xFB, 0x92), (0x00, 0x76, 0xFF), (0xD5, 0xFF, 0x00),
+                           (0xFF, 0x93, 0x7E), (0x6A, 0x82, 0x6C), (0xFF, 0x02, 0x9D), (0xFE, 0x89, 0x00),
+                           (0x7A, 0x47, 0x82), (0x7E, 0x2D, 0xD2), (0x85, 0xA9, 0x00), (0xFF, 0x00, 0x56),
+                           (0xA4, 0x24, 0x00), (0x00, 0xAE, 0x7E), (0x68, 0x3D, 0x3B), (0xBD, 0xC6, 0xFF),
+                           (0x26, 0x34, 0x00), (0xBD, 0xD3, 0x93), (0x00, 0xB9, 0x17), (0x9E, 0x00, 0x8E),
+                           (0x00, 0x15, 0x44), (0xC2, 0x8C, 0x9F), (0xFF, 0x74, 0xA3), (0x01, 0xD0, 0xFF),
+                           (0x00, 0x47, 0x54), (0xE5, 0x6F, 0xFE), (0x78, 0x82, 0x31), (0x0E, 0x4C, 0xA1),
+                           (0x91, 0xD0, 0xCB), (0xBE, 0x99, 0x70), (0x96, 0x8A, 0xE8), (0xBB, 0x88, 0x00),
+                           (0x43, 0x00, 0x2C), (0xDE, 0xFF, 0x74), (0x00, 0xFF, 0xC6), (0xFF, 0xE5, 0x02),
+                           (0x62, 0x0E, 0x00), (0x00, 0x8F, 0x9C), (0x98, 0xFF, 0x52), (0x75, 0x44, 0xB1),
+                           (0xB5, 0x00, 0xFF), (0x00, 0xFF, 0x78), (0xFF, 0x6E, 0x41), (0x00, 0x5F, 0x39),
+                           (0x6B, 0x68, 0x82), (0x5F, 0xAD, 0x4E), (0xA7, 0x57, 0x40), (0xA5, 0xFF, 0xD2),
+                           (0xFF, 0xB1, 0x67), (0x00, 0x9B, 0xFF), (0xE8, 0x5E, 0xBE)]
 
         # Generator: Walk through an image pixel by pixel
         def walk(image):
@@ -257,7 +291,7 @@ class Agent:
                 x = index % width
                 y = index / width
                 # Yield the current position and value
-                yield (x,y,pixel)
+                yield (x, y, pixel)
 
         width, height = image.size
         image = image.convert('RGB')
@@ -291,13 +325,13 @@ class Agent:
                 processing = list(neighbors)
                 # Neighbors have been added to the processing list; clear the neighbors list
                 neighbors = []
-                for x,y in processing:
+                for x, y in processing:
                     # White out this neighbor
                     image.putpixel((x, y), (255, 255, 255))
                     # Find all the neighbor pixels
-                    new = [(x-1, y), (x+1, y), (x, y-1), (x, y+1)]
-                    for x,y, in new:
-                        if (x,y) in neighbors:
+                    new = [(x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)]
+                    for x, y, in new:
+                        if (x, y) in neighbors:
                             # Added, skip
                             continue
                         if x < 0 or x >= width:
@@ -306,12 +340,12 @@ class Agent:
                         if y < 0 or y >= height:
                             # Not valid
                             continue
-                        if image.getpixel((x,y)) == (255, 255, 255) or image.getpixel((x, y)) == color:
+                        if image.getpixel((x, y)) == (255, 255, 255) or image.getpixel((x, y)) == color:
                             # This pixel is targeted for cropping, skip it and do NOT whiteout
                             continue
 
                         # If passed all conditions, add pixel to the neighbors of those that need to be whited out
-                        neighbors.append((x,y))
+                        neighbors.append((x, y))
 
             # Save the image to a new directory
             figure = imagePath[-13:-12]
@@ -342,19 +376,19 @@ class Agent:
                 x = index % width
                 y = index / width
                 # Yield the current position and value
-                yield (x,y,pixel)
+                yield (x, y, pixel)
 
         # Walk the image and find the rightmost, leftmost, bottommost and uppermost pixels to use for cropping the object
         for x, y, pixel in walk(image):
-                if pixel != (255, 255, 255) and pixel == color:
-                    if x > rightmost:
-                        rightmost = x
-                    if x < leftmost:
-                        leftmost = x
-                    if y > bottomost:
-                        bottomost = y
-                    if y < uppermost:
-                        uppermost = y
+            if pixel != (255, 255, 255) and pixel == color:
+                if x > rightmost:
+                    rightmost = x
+                if x < leftmost:
+                    leftmost = x
+                if y > bottomost:
+                    bottomost = y
+                if y < uppermost:
+                    uppermost = y
 
         cropCoords = (leftmost, uppermost, rightmost, bottomost)
         image = image.crop(cropCoords)
@@ -364,9 +398,6 @@ class Agent:
         image = Image.open(path)
         width, height = image.size
         total = width * height
-        outerWhite = 0.0
-        inside = False
-        prevPixel = None
 
         def walk(image):
             width, height = image.size
@@ -376,7 +407,7 @@ class Agent:
                 x = index % width
                 y = index / width
                 # Yield the current position and value
-                yield (x,y,pixel)
+                yield (x, y, pixel)
 
         # Walk the image and find the rightmost, leftmost, bottommost and uppermost pixels to use for cropping the object
         prevLine = -1
@@ -409,6 +440,62 @@ class Agent:
         # Calculate the ratio between the total number of pixels and the white pixels outside the shape; use this as an estimation of similar objects
         ratio = outerWhite / total
         return ratio
+
+    def findFill(self, path):
+        image = Image.open(path)
+        width, height = image.size
+
+        def walk(image):
+            width, height = image.size
+            # Go through each pixel sequentially
+            for index, pixel in enumerate(image.getdata()):
+                # Calculate the current position
+                x = index % width
+                y = index / width
+                # Yield the current position and value
+                yield (x, y, pixel)
+
+        # Walk the image and find the rightmost, leftmost, bottommost and uppermost pixels to use for cropping the object
+        prevLine = -1
+        innerWhite = 0.
+        innerTotal = 0.
+        firstPixels = {}
+        lastPixels = {}
+        firstFound = None
+        fillEstimate = None
+
+        # Find the first and last non-white pixels in a row of the image and store them
+        for x, y, pixel in walk(image):
+            if y > prevLine:
+                firstFound = False
+
+            if pixel != (255, 255, 255) and firstFound is False:
+                firstFound = True
+                firstPixels[y] = (x, y)
+            if pixel != (255, 255, 255):
+                lastPixels[y] = (x, y)
+
+            prevLine = y
+
+        # Iterate over each line again and count all the pixels prior to the first non-white pixel and after the last non-white pixel
+        for x, y, pixel in walk(image):
+            firstX = firstPixels[y][0]
+            lastX = lastPixels[y][0]
+
+            if x > firstX or x < lastX:
+                innerTotal += 1
+                if pixel == (255, 255, 255):
+                    innerWhite += 1
+
+        fillPercent = innerWhite / innerTotal * 100
+
+        if fillPercent > 60:
+            fillEstimate = "yes"
+        elif fillPercent < 5:
+            fillEstimate = "no"
+        elif fillPercent > 40 and fillPercent < 60:
+            fillEstimate = "half"
+        return fillEstimate
 
 
 
