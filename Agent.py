@@ -14,6 +14,7 @@ import os
 import string
 from glob import glob
 import shutil
+import platform
 
 
 class Agent:
@@ -27,10 +28,12 @@ class Agent:
     figList2x1 = ["A", "B", "C", "1", "2", "3", "4", "5", "6"]
     figList2x2 = ["A", "B", "C", "1", "2", "3", "4", "5", "6"]
     figList3x3 = ["A", "B", "C", "D", "E", "F", "G", "H", "1", "2", "3", "4", "5", "6"]
+    objectInfo = {}
 
     def __init__(self):
         objAlphabet = list(string.printable[:-6])
         currentChar = 0
+        objectInfo = {}
         pass
 
     # The primary method for solving incoming Raven's Progressive Matrices.
@@ -59,55 +62,57 @@ class Agent:
 
     def Solve(self, problem):
 
-        if problem.getName() == "2x1 Basic Problem 09":
-            # Initialize problem information
-            probType = problem.getProblemType()
-            probName = problem.getName()
-            figures = problem.getFigures()
-            rootPath = ""  # File path to root folder of problem
-            figList = ""
-            savePath = ""  # Path to saved, processed images
+        #if problem.getName() == "2x1 Basic Problem 09":
+        # Initialize problem information
+        probType = problem.getProblemType()
+        probName = problem.getName()
+        print probName
+        figures = problem.getFigures()
+        rootPath = ""  # File path to root folder of problem
+        figList = ""
+        savePath = ""  # Path to saved, processed images
 
-            if probType == "2x1 (Image)":
-                figList = self.figList2x1
-            elif probType == "2x2 (Image)":
-                figList = self.figList2x2
-            elif probType == "3x3 (Image)":
-                figList = self.figList3x3
+        #Set fig list to the corresponding problem type
+        if probType == "2x1 (Image)":
+            figList = self.figList2x1
+        elif probType == "2x2 (Image)":
+            figList = self.figList2x2
+        elif probType == "3x3 (Image)":
+            figList = self.figList3x3
 
-            # Pre-process the images for determination logic
-            for figure in figures:
-                path = figures[figure].getPath()
-                rootPath = path[:-5]
-                print rootPath
-                savePath = self.cleanPaths(path)
-                self.decolorize(path, savePath, figure)
-                self.colorize(savePath + figure + ".png")
+        # Pre-process the images for determination logic
+        for figure in figures:
+            path = figures[figure].getPath()
+            rootPath = path[:-5]
+            # print rootPath
+            savePath = self.cleanPaths(path)
+            self.decolorize(path, savePath, figure)
+            self.colorize(savePath + figure + ".png")
 
-            # Find object attributes and write them to file
-            objPath = savePath + 'Cropped Objects/'
-            objsList = glob(os.path.join(objPath, '*.png'))
+        # Find object attributes and write them to file
+        objPath = savePath + 'Cropped Objects/'
+        objsList = glob(os.path.join(objPath, '*.png'))
 
-            shutil.copyfile(rootPath + probName.replace(" ", "") + ".txt", rootPath + "GeneratedRep.txt")
+        shutil.copyfile(rootPath + probName.replace(" ", "") + ".txt", rootPath + "GeneratedRep.txt")
 
-            for figure in figList:
-                with open(rootPath + "GeneratedRep.txt", "a") as repFile:
-                    repFile.write("\n" + figure)
-                    for object in sorted(objsList):
-                        figureID = object[-15:-14]
-                        if figureID == figure:
-                            objectID = object[-13:-12]
-                            repFile.write("\n" + "    " + objectID)
-                            repFile.write("\n" + "        shape:" + str(self.findShape(object)))
-                            # Find fill
-                            repFile.write("\n" + "        fill:" + self.findFill(object))
-                            # find Rotation
-                            repFile.write("\n" + "        shape:" + str(self.findShape(object)))
-                            # Find Positionals
-                            repFile.write("\n" + "        shape:" + str(self.findShape(object)))
+        for figure in figList:
+            with open(rootPath + "GeneratedRep.txt", "a") as repFile:
+                repFile.write("\n" + figure)
+                for object in sorted(objsList):
+                    figureID = object[-15:-14]
+                    if figureID == figure:
+                        objectID = object[-13:-12]
+                        repFile.write("\n" + "    " + objectID)
+                        repFile.write("\n" + "        shape:" + str(self.findShape(object)))
+                        # Find fill
+                        repFile.write("\n" + "        fill:" + self.findFill(object))
+                        # find Rotation
+                        repFile.write("\n" + "        angle:" + str(self.findRotation(object)))
+                        # Find Positionals
+                        repFile.write("\n" + self.findPosition(figureID, objectID))
 
-                            # Pass written file to "old" agent for processing of propositional representation
-                            # TODO: old agent logic inserted here
+                        # Pass written file to "old" agent for processing of propositional representation
+                        # TODO: old agent logic inserted here
 
         return "6"
 
@@ -136,7 +141,6 @@ class Agent:
         return savePath
 
     def decolorize(self, path, savePath, figure):
-
         # Open the image
         image = Image.open(path)
 
@@ -169,7 +173,6 @@ class Agent:
         return
 
     def colorize(self, imagePath):
-
         image = Image.open(imagePath)
 
         DISTINCT_COLORS = [(0x00, 0xFF, 0x00), (0x00, 0x00, 0xFF), (0xFF, 0x00, 0x00), (0x01, 0xFF, 0xFE),
@@ -253,16 +256,9 @@ class Agent:
                         neighbors.append((x, y))
         coloredPath = imagePath[:-4] + '-Colored.png'
         image.save(coloredPath)
-
         self.isolateObjects(coloredPath, colorindex)
 
-        return
-
     def isolateObjects(self, imagePath, numColors):
-
-        # SOLUTION: Rather than repeat whiteout process for each color on each figure we should:
-        # whiteout one color, save image, revert to unaltered image, whiteout next color, save image, and so on
-
         image = Image.open(imagePath)
 
         DISTINCT_COLORS = [(0x00, 0xFF, 0x00), (0x00, 0x00, 0xFF), (0xFF, 0x00, 0x00), (0x01, 0xFF, 0xFE),
@@ -347,18 +343,18 @@ class Agent:
                         # If passed all conditions, add pixel to the neighbors of those that need to be whited out
                         neighbors.append((x, y))
 
-            # Save the image to a new directory
-            figure = imagePath[-13:-12]
-            croppedPath = os.path.join(imagePath[:-13] + "Cropped Objects/")
-            self.currentChar += 1
-            isolatedPath = croppedPath + figure + "-" + self.objAlphabet[self.currentChar] + "-Cropped.png"
-            image.save(isolatedPath)
+        # Save the image to a new directory
+        figure = imagePath[-13:-12]
+        croppedPath = os.path.join(imagePath[:-13] + "Cropped Objects/")
+        self.currentChar += 1
+        isolatedPath = croppedPath + figure + "-" + self.objAlphabet[self.currentChar] + "-Cropped.png"
+        image.save(isolatedPath)
 
-            # Crop the isolated image to just the object and no extra whitespace
-            self.cropObject(isolatedPath, color)
+        # Crop the isolated image to just the object and no extra whitespace
+        self.cropObject(isolatedPath, color)
 
-            # Reopen the original image and isolate the next object
-            image = Image.open(imagePath)
+        # Reopen the original image and isolate the next object
+        image = Image.open(imagePath)
 
     def cropObject(self, path, color):
         image = Image.open(path)
@@ -391,6 +387,14 @@ class Agent:
                     uppermost = y
 
         cropCoords = (leftmost, uppermost, rightmost, bottomost)
+
+        #Store the current object and its color and cropCoords for later use
+        objectID = path[-15:-12]
+        self.objectInfo[objectID] = info = {}
+        info['color'] = color
+        info['coords'] = cropCoords
+        print objectID, cropCoords
+        # Crop the image with the ascertained coordinates and then save the image
         image = image.crop(cropCoords)
         image.save(path)
 
@@ -398,6 +402,7 @@ class Agent:
         image = Image.open(path)
         width, height = image.size
         total = width * height
+        print path
 
         def walk(image):
             width, height = image.size
@@ -418,6 +423,7 @@ class Agent:
 
         # Find the first and last non-white pixels in a row of the image and store them
         for x, y, pixel in walk(image):
+
             if y > prevLine:
                 firstFound = False
 
@@ -431,11 +437,14 @@ class Agent:
 
         # Iterate over each line again and count all the pixels prior to the first non-white pixel and after the last non-white pixel
         for x, y, pixel in walk(image):
-            firstX = firstPixels[y][0]
-            lastX = lastPixels[y][0]
+            try:
+                firstX = firstPixels[y][0]
+                lastX = lastPixels[y][0]
 
-            if x < firstX or x > lastX:
-                outerWhite += 1
+                if x < firstX or x > lastX:
+                    outerWhite += 1
+            except KeyError:
+                pass
 
         # Calculate the ratio between the total number of pixels and the white pixels outside the shape; use this as an estimation of similar objects
         ratio = outerWhite / total
@@ -479,24 +488,69 @@ class Agent:
 
         # Iterate over each line again and count all the pixels prior to the first non-white pixel and after the last non-white pixel
         for x, y, pixel in walk(image):
-            firstX = firstPixels[y][0]
-            lastX = lastPixels[y][0]
+            try:
+                firstX = firstPixels[y][0]
+                lastX = lastPixels[y][0]
 
-            if x > firstX or x < lastX:
-                innerTotal += 1
-                if pixel == (255, 255, 255):
-                    innerWhite += 1
+                if x > firstX or x < lastX:
+                    innerTotal += 1
+                    if pixel == (255, 255, 255):
+                        innerWhite += 1
+            except KeyError:
+                pass
 
-        fillPercent = innerWhite / innerTotal * 100
+        whitePercent = innerWhite / innerTotal * 100
+        # print innerWhite, innerTotal
+        # print path, " ", whitePercent
 
-        if fillPercent > 60:
-            fillEstimate = "yes"
-        elif fillPercent < 5:
+        if whitePercent > 70:
             fillEstimate = "no"
-        elif fillPercent > 40 and fillPercent < 60:
-            fillEstimate = "half"
+        elif whitePercent < 70:
+            fillEstimate = "yes"
+
+        # TODO: account for half filled objects
+
         return fillEstimate
 
+    def findRotation(self, path):
+        # TODO: implement logic to find centroid, vertices, and comparable rotation between each other object
 
+        return 0
+
+    def findPosition(self, figureID, objectID):
+
+        aboveStr = ""
+        insideStr = ""
+        leftOfStr = ""
+
+        object = figureID + "-" + objectID
+        currLeft, currUpper, currRight, currBottom = self.objectInfo.get(object)['coords']
+
+        # For each object in this figure that is not the current object we're looking at, compare crop coordinates
+        for key in self.objectInfo:
+            if key != object and (figureID + "-") in key:
+                compLeft, compUpper, compRight, compBottom = self.objectInfo.get(key)['coords']
+
+                # Check if current object is above the comparison object
+                if currBottom < compUpper:
+                    aboveStr += (key[2:3] + ", ")
+                # Check if hte current object is left-of the comparison object
+                if currRight < compLeft:
+                    leftOfStr += (key[2:3] + ", ")
+                if (currLeft < compLeft and currUpper < compUpper) and (currRight > compRight and currBottom > compBottom):
+                    insideStr += (key[2:3] + ", ")
+
+        # Build position string; compilation of all positional values
+        positionStr = ""
+        if aboveStr != "":
+           positionStr += "        above:" + aboveStr[:-2] + "\n"
+
+        if insideStr != "":
+            positionStr += "        inside:" + insideStr[:-2] + "\n"
+
+        if leftOfStr != "":
+            positionStr += "        left-of:" + leftOfStr[:-2] + "\n"
+
+        return positionStr
 
 

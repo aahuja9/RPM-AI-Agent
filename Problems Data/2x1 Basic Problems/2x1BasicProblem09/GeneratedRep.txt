@@ -4,45 +4,108 @@
 A
     1
         shape:0.40082815735
+        fill:no
+        angle:unknown
+
     2
         shape:0.40082815735
+        fill:no
+        angle:unknown
+
 B
     5
         shape:0.451282051282
+        fill:yes
+        angle:unknown
+
     6
         shape:0.409937888199
+        fill:no
+        angle:unknown
+
 C
     3
         shape:0.0
+        fill:no
+        angle:unknown
+        above:4
+        left-of:4
+
     4
         shape:0.0
+        fill:no
+        angle:unknown
+
 1
     7
         shape:0.0
+        fill:yes
+        angle:unknown
+        above:8
+        left-of:8
+
     8
         shape:0.0
+        fill:no
+        angle:unknown
+
 2
     b
         shape:0.0
+        fill:no
+        angle:unknown
+        above:c
+        left-of:c
+
     c
         shape:0.0
+        fill:no
+        angle:unknown
+
 3
     9
         shape:0.0
+        fill:no
+        angle:unknown
+        above:a
+        left-of:a
+
     a
         shape:0.0
+        fill:yes
+        angle:unknown
+
 4
     f
         shape:0.0
+        fill:yes
+        angle:unknown
+        above:g
+        left-of:g
+
     g
         shape:0.0
+        fill:yes
+        angle:unknown
+
 5
     d
         shape:0.478024691358
+        fill:yes
+        angle:unknown
+
     e
         shape:0.468764146673
+        fill:no
+        angle:unknown
+
 6
     h
         shape:0.468537799909
+        fill:no
+        angle:unknown
+
     i
         shape:0.472592592593
+        fill:yes
+        angle:unknown

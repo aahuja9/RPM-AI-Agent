@@ -42,6 +42,7 @@ def main():
         results.write("%s\n" % "-----------")   # Problem sets will be individually categorized in the results file.
 
         for problem in set.getProblems():   # Your agent will solve one problem at a time.
+            #if problem.getName() == "2x1 Basic Problem 01":
             problem.setAnswerReceived(agent.Solve(problem))     # The problem will be passed to your agent as a RavensProblem object as a parameter to the Solve method
                                                                 # Your agent should return its answer at the conclusion of the execution of Solve.
                                                                 # Note that if your agent makes use of RavensProblem.check to check its answer, the answer passed to check() will be used.

@@ -1,0 +1,182 @@
+2x1 Basic Problem 07
+2x1 (Image)
+2
+A
+    I
+        shape:0.43031358885
+        fill:yes
+        angle:0
+        above:K, J, a, b, t
+        left-of:9, K
+
+    J
+        shape:0.0
+        fill:yes
+        angle:0
+        left-of:9, I, K, t
+
+    K
+        shape:0.158239143367
+        fill:yes
+        angle:0
+
+B
+    O
+        shape:0.397212543554
+        fill:yes
+        angle:0
+        above:P, Q, x, g
+        left-of:Q
+
+    P
+        shape:0.0
+        fill:no
+        angle:0
+        left-of:Q
+
+    Q
+        shape:0.154127100073
+        fill:yes
+        angle:0
+
+C
+    L
+        shape:0.0
+        fill:yes
+        angle:0
+        above:e, d, v, N
+        inside:c
+        left-of:e, d, v, M, N
+
+    M
+        shape:0.158239143367
+        fill:yes
+        angle:0
+        above:e, d, v, N
+
+    N
+        shape:0.432447397564
+        fill:yes
+        angle:0
+        left-of:M
+
+1
+    R
+        shape:0.0
+        fill:no
+        angle:0
+        above:T
+        inside:i
+        left-of:S
+
+    S
+        shape:0.153627311522
+        fill:yes
+        angle:0
+        above:j, T
+
+    T
+        shape:0.43031358885
+        fill:yes
+        angle:0
+        left-of:S
+
+2
+    X
+        shape:0.0
+        fill:no
+        angle:0
+        above:Z
+        left-of:Y
+
+    Y
+        shape:0.154127100073
+        fill:yes
+        angle:0
+        above:l, B, Z
+
+    Z
+        shape:0.401020986954
+        fill:yes
+        angle:0
+        left-of:Y
+
+3
+    U
+        shape:0.0
+        fill:yes
+        angle:0
+        above:W, z
+        left-of:W, V, z
+
+    V
+        shape:0.154127100073
+        fill:yes
+        angle:0
+        above:W, z
+
+    W
+        shape:0.397212543554
+        fill:yes
+        angle:0
+        left-of:V
+
+4
+    $
+        shape:0.0
+        fill:no
+        angle:0
+        above:p, &
+        left-of:p, %
+
+    %
+        shape:0.159698025552
+        fill:yes
+        angle:0
+        above:F, p, &
+
+    &
+        shape:0.397212543554
+        fill:yes
+        angle:0
+        left-of:p, %
+
+5
+    !
+        shape:0.0
+        fill:yes
+        angle:0
+        above:n, D, #
+        left-of:n, D, #, "
+
+    "
+        shape:0.158239143367
+        fill:yes
+        angle:0
+        above:n, D, #
+
+    #
+        shape:0.430516165627
+        fill:yes
+        angle:0
+        left-of:"
+
+6
+    '
+        shape:0.0
+        fill:yes
+        angle:0
+        above:r, H, q, )
+        left-of:r, H, q, ), (
+
+    (
+        shape:0.158239143367
+        fill:yes
+        angle:0
+        above:r, H, q, )
+
+    )
+        shape:0.397212543554
+        fill:yes
+        angle:0
+        left-of:(

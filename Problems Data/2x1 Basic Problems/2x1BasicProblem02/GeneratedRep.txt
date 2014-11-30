@@ -1,0 +1,57 @@
+2x1 Basic Problem 02
+2x1 (Image)
+6
+A
+    a
+        shape:0.178881710849
+        fill:no
+        angle:0
+
+B
+    c
+        shape:0.194976982693
+        fill:no
+        angle:0
+
+C
+    b
+        shape:0.0
+        fill:no
+        angle:0
+
+1
+    d
+        shape:0.456540825285
+        fill:no
+        angle:0
+
+2
+    f
+        shape:0.477446217904
+        fill:no
+        angle:0
+
+3
+    e
+        shape:0.178881710849
+        fill:no
+        angle:0
+
+4
+    h
+        shape:0.0
+        fill:no
+        angle:0
+
+5
+    g
+        shape:0.194976982693
+        fill:no
+        angle:0
+        inside:7
+
+6
+    i
+        shape:0.0
+        fill:no
+        angle:0

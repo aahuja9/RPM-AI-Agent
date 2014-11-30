@@ -1,0 +1,119 @@
+2x1 Basic Problem 05
+2x1 (Image)
+2
+A
+    9
+        shape:0.119047619048
+        fill:yes
+        angle:0
+        above:a, b
+
+    a
+        shape:0.189164370983
+        fill:no
+        angle:0
+        inside:b
+        left-of:9
+
+    b
+        shape:0.436672967864
+        fill:no
+        angle:0
+        left-of:9
+
+B
+    f
+        shape:0.463822714681
+        fill:no
+        angle:0
+
+    g
+        shape:0.189164370983
+        fill:no
+        angle:0
+
+C
+    c
+        shape:0.124716553288
+        fill:yes
+        angle:0
+        above:e, d
+        left-of:e, d
+
+    d
+        shape:0.464543393115
+        fill:no
+        angle:0
+        inside:e
+
+    e
+        shape:0.102222222222
+        fill:yes
+        angle:0
+
+1
+    h
+        shape:0.176520092573
+        fill:no
+        angle:0
+        inside:i
+
+    i
+        shape:0.119047619048
+        fill:yes
+        angle:0
+        above:j
+        left-of:j
+
+    j
+        shape:0.470109255824
+        fill:no
+        angle:0
+
+2
+    k
+        shape:0.189074290573
+        fill:no
+        angle:0
+
+    l
+        shape:0.470109255824
+        fill:no
+        angle:0
+
+3
+4
+    o
+        shape:0.189074290573
+        fill:no
+        angle:0
+        above:p
+        left-of:p
+
+    p
+        shape:0.417537746806
+        fill:yes
+        angle:0
+
+5
+    m
+        shape:0.162469135802
+        fill:yes
+        angle:0
+
+    n
+        shape:0.470109255824
+        fill:no
+        angle:0
+
+6
+    q
+        shape:0.470109255824
+        fill:no
+        angle:0
+        inside:r
+
+    r
+        shape:0.162469135802
+        fill:yes
+        angle:0
