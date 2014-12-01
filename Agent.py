@@ -31,9 +31,8 @@ class Agent:
     objectInfo = {}
 
     def __init__(self):
-        objAlphabet = list(string.printable[:-6])
-        currentChar = 0
-        objectInfo = {}
+        self.currentChar = 0
+        self.objectInfo = {}
         pass
 
     # The primary method for solving incoming Raven's Progressive Matrices.
@@ -61,9 +60,11 @@ class Agent:
     # @return your Agent's answer to this problem
 
     def Solve(self, problem):
-
+        self.currentChar = 0
         #if problem.getName() == "2x1 Basic Problem 09":
         # Initialize problem information
+        print self.objAlphabet
+        #print self.objAlphabet.index("/")
         probType = problem.getProblemType()
         probName = problem.getName()
         print probName
@@ -292,6 +293,13 @@ class Agent:
         width, height = image.size
         image = image.convert('RGB')
         currentColor = 0
+        seen = []
+
+        for x, y, pixel in walk(image):
+            if pixel != (255, 255, 255) and pixel not in seen:
+                seen.append(pixel)
+
+        numColors = len(seen)
 
         # Find the first pixel of the current color
         while True:
@@ -299,8 +307,10 @@ class Agent:
 
             color = DISTINCT_COLORS[currentColor]
             currentColor += 1
-            if currentColor >= numColors:
+
+            if currentColor > numColors:
                 break
+            print color
             # Find the first colored pixel that's not the color we're cropping
             coloredPixel = None
             for x, y, pixel in walk(image):
@@ -343,18 +353,18 @@ class Agent:
                         # If passed all conditions, add pixel to the neighbors of those that need to be whited out
                         neighbors.append((x, y))
 
-        # Save the image to a new directory
-        figure = imagePath[-13:-12]
-        croppedPath = os.path.join(imagePath[:-13] + "Cropped Objects/")
-        self.currentChar += 1
-        isolatedPath = croppedPath + figure + "-" + self.objAlphabet[self.currentChar] + "-Cropped.png"
-        image.save(isolatedPath)
+            # Save the image to a new directory
+            figure = imagePath[-13:-12]
+            croppedPath = os.path.join(imagePath[:-13] + "Cropped Objects/")
+            self.currentChar += 1
+            isolatedPath = croppedPath + figure + "-" + self.objAlphabet[self.currentChar] + "-Cropped.png"
+            image.save(isolatedPath)
 
-        # Crop the isolated image to just the object and no extra whitespace
-        self.cropObject(isolatedPath, color)
+            # Crop the isolated image to just the object and no extra whitespace
+            self.cropObject(isolatedPath, color)
 
-        # Reopen the original image and isolate the next object
-        image = Image.open(imagePath)
+            # Reopen the original image and isolate the next object
+            image = Image.open(imagePath)
 
     def cropObject(self, path, color):
         image = Image.open(path)
@@ -393,7 +403,6 @@ class Agent:
         self.objectInfo[objectID] = info = {}
         info['color'] = color
         info['coords'] = cropCoords
-        print objectID, cropCoords
         # Crop the image with the ascertained coordinates and then save the image
         image = image.crop(cropCoords)
         image.save(path)

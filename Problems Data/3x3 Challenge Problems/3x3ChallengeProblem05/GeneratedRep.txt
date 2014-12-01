@@ -1,0 +1,156 @@
+3x3 Challenge Problem 05
+3x3 (Image)
+1
+A
+    1
+        shape:0.442493415277
+        fill:no
+        angle:0
+        above:3
+        left-of:2
+
+    2
+        shape:0.442493415277
+        fill:no
+        angle:0
+
+    3
+        shape:0.442493415277
+        fill:no
+        angle:0
+        left-of:2
+
+B
+    4
+        shape:0.456540825285
+        fill:yes
+        angle:0
+        left-of:5
+
+    5
+        shape:0.456540825285
+        fill:yes
+        angle:0
+
+C
+D
+    6
+        shape:0.456540825285
+        fill:no
+        angle:0
+        left-of:7
+
+    7
+        shape:0.456540825285
+        fill:no
+        angle:0
+
+E
+F
+    8
+        shape:0.456540825285
+        fill:yes
+        angle:0
+        above:9, a
+
+    9
+        shape:0.456540825285
+        fill:yes
+        angle:0
+        left-of:a
+
+    a
+        shape:0.456540825285
+        fill:yes
+        angle:0
+
+G
+H
+    b
+        shape:0.456540825285
+        fill:no
+        angle:0
+        above:d, c
+
+    c
+        shape:0.456540825285
+        fill:no
+        angle:0
+        left-of:d
+
+    d
+        shape:0.456540825285
+        fill:no
+        angle:0
+
+1
+    e
+        shape:0.442493415277
+        fill:no
+        angle:0
+        above:f
+
+    f
+        shape:0.442493415277
+        fill:no
+        angle:0
+
+2
+    i
+        shape:0.442493415277
+        fill:no
+        angle:0
+        left-of:j
+
+    j
+        shape:0.442493415277
+        fill:no
+        angle:0
+
+3
+    g
+        shape:0.456540825285
+        fill:no
+        angle:0
+        left-of:h
+
+    h
+        shape:0.456540825285
+        fill:no
+        angle:0
+
+4
+    m
+        shape:0.442493415277
+        fill:yes
+        angle:0
+        above:n
+
+    n
+        shape:0.442493415277
+        fill:yes
+        angle:0
+
+5
+    k
+        shape:0.442493415277
+        fill:yes
+        angle:0
+        left-of:l
+
+    l
+        shape:0.442493415277
+        fill:yes
+        angle:0
+
+6
+    o
+        shape:0.456540825285
+        fill:yes
+        angle:0
+        left-of:p
+
+    p
+        shape:0.456540825285
+        fill:yes
+        angle:0

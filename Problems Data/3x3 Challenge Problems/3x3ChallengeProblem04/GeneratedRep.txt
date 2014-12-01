@@ -1,0 +1,25 @@
+3x3 Challenge Problem 04
+3x3 (Image)
+4
+A
+    1
+        shape:0.0
+        fill:no
+        angle:0
+        above:3, 2
+
+    2
+        shape:0.456540825285
+        fill:no
+        angle:0
+        left-of:3, 1
+
+    3
+        shape:0.148808197817
+        fill:no
+        angle:0
+
+    q
+        shape:0.0
+        fill:no
+        angle:0
